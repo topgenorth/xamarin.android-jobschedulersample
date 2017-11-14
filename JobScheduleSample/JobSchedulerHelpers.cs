@@ -13,7 +13,14 @@ namespace JobScheduleSample
         public static readonly string FibonacciResultKey = "fibonacci_result";
         public static readonly string FibonacciJobActionKey = "JobScheduleSample.FibonacciJob.RESULTS";
 
-        public static JobInfo.Builder CreateJobInfoBuilderForFibonnaciCalculation(this Context context, int value) 
+        /// <summary>
+        /// Helper to initialize the JobInfo.Builder for the Fibonacci JobService, 
+        /// initializing the value 
+        /// </summary>
+        /// <returns>The job info builder for fibonnaci calculation.</returns>
+        /// <param name="context">Context.</param>
+        /// <param name="value">Value.</param>
+        public static JobInfo.Builder CreateJobInfoBuilderForFibonnaciCalculation(this Context context, int value)
         {
             var component = context.GetComponentNameForJob<FibonacciJob>();
             JobInfo.Builder builder = new JobInfo.Builder(FibonacciJobId, component)
@@ -21,14 +28,14 @@ namespace JobScheduleSample
             return builder;
         }
 
-        public static ComponentName GetComponentNameForJob<T>(this Context context) where T:JobService
+        public static ComponentName GetComponentNameForJob<T>(this Context context) where T : JobService
         {
             Type t = typeof(T);
             Class javaClass = Class.FromType(t);
             return new ComponentName(context, javaClass);
         }
 
-        public static JobInfo.Builder SetFibonacciValue(this JobInfo.Builder builder, int value) 
+        public static JobInfo.Builder SetFibonacciValue(this JobInfo.Builder builder, int value)
         {
             var extras = new PersistableBundle();
             extras.PutLong(FibonacciValueKey, value);

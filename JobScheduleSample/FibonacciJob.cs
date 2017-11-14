@@ -7,6 +7,12 @@ using Android.Util;
 
 namespace JobScheduleSample
 {
+    /// <summary>
+    /// Calculates the Fibonacci number for a given seed value in the 
+    /// background. When the Fibonacci number is calculated, this service
+    /// will broadcast an intent with the action set to 
+    /// <code>JobScheduleSample.FibonacciJob.RESULTS</code>.
+    /// </summary>
     [Service(Name = "JobScheduleSample.FibonacciJob", Permission = "android.permission.BIND_JOB_SERVICE")]
     public class FibonacciJob : JobService
     {
@@ -43,10 +49,29 @@ namespace JobScheduleSample
                 calculator.Cancel(true);
             }
             calculator = null;
+
+
+            BroadcastResults(-1);
+
             return false; // Don't reschedule the job.
         }
 
 
+        /// <summary>
+        /// Broadcast the result of the Fibonacci calculation.
+        /// </summary>
+        /// <param name="result">Result.</param>
+        void BroadcastResults(long result)
+        {
+            Intent i = new Intent(JobSchedulerHelpers.FibonacciJobActionKey);
+            i.PutExtra(JobSchedulerHelpers.FibonacciResultKey, result);
+            BaseContext.SendBroadcast(i);
+        }
+
+
+        /// <summary>
+        /// Performs a simple Fibonacci calculation for a seed value. 
+        /// </summary>
         class SimpleFibonacciCalculatorTask : AsyncTask<long, Java.Lang.Void, long>
         {
             readonly FibonacciJob jobService;
@@ -95,7 +120,7 @@ namespace JobScheduleSample
 
                 fibonacciValue = result;
 
-                BroadcastResults(result);
+                jobService.BroadcastResults(result);
 
                 jobService.JobFinished(jobService.parameters, false);
 
@@ -103,15 +128,13 @@ namespace JobScheduleSample
 
             }
 
-            void BroadcastResults(long result)
+            protected override void OnCancelled()
             {
-
-                Context c = jobService.BaseContext;
-
-                Intent i = new Intent(JobSchedulerHelpers.FibonacciJobActionKey);
-                i.PutExtra(JobSchedulerHelpers.FibonacciResultKey, result);
-                jobService.BaseContext.SendBroadcast(i);
+                Log.Debug(TAG, "Job was cancelled.");
+                jobService.BroadcastResults(-1);
+                base.OnCancelled();
             }
+
         }
     }
 }

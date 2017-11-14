@@ -8,17 +8,19 @@ namespace JobScheduleSample
         [BroadcastReceiver(Enabled = true, Exported = false)]
         protected internal class FibonacciResultReciever : BroadcastReceiver
         {
+            MainActivity activity;
 
             public FibonacciResultReciever()
             {
                 Log.Debug(TAG, "FibonacciResultReceiver");
             }
-            MainActivity activity;
+
             public FibonacciResultReciever(MainActivity activity)
             {
                 Log.Debug(TAG, "FibonacciResultReceiver(MainActivity)");
                 this.activity = activity;
             }
+
             public override void OnReceive(Context context, Intent intent)
             {
                 Log.Debug(TAG, "Received broadcast");
