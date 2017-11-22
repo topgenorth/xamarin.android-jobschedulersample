@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JobScheduler Sample - Fibonacci</string>
+    <string name="fibonacci_button_text">Fibonacci Calculator</string>
+	<string name="fibonacci_start_value_default">50</string>
+	<string name="fibonacci_textview">Fibonacci Result:</string>
+	<string name="fibonacci_start_textview">Fibonacci:</string>
+	<string name="fibonacci_calculation_in_progress">Fibonacci calculation is underway.</string>
+	<string name="fibonacci_calculation_problem">There was a problem trying to run the Fibonacci calculator.</string>
+	<string name="fibonacci_calculation_result">Fibonacci value: %1$s.</string>
+</resources>
