@@ -52,3 +52,4 @@ _ReSharper*/
 #Subversion files
 .svn
 /JobScheduleSample.userprefs
+/.vs
