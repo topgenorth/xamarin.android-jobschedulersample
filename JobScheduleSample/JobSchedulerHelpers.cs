@@ -11,7 +11,7 @@ namespace JobScheduleSample
         public static readonly int FibonacciJobId = 110;
         public static readonly string FibonacciValueKey = "fibonacci_value";
         public static readonly string FibonacciResultKey = "fibonacci_result";
-        public static readonly string FibonacciJobActionKey = ;
+        public static readonly string FibonacciJobActionKey = "fibonacci_job_action";
 
         /// <summary>
         /// Helper to initialize the JobInfo.Builder for the Fibonacci JobService, 
